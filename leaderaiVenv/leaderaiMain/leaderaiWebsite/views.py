@@ -1,6 +1,10 @@
 from django.shortcuts import render
-from django.http import HttpResponse
 
-def home(request):
-    return HttpResponse("Hello, world!")
+def login_view(request):
+    if request.method == 'POST':
+        # Handle login logic here
+        pass
+    return render(request, 'leaderaiWebsite/login.html')
 
+def main_view(request):
+    return render(request, 'leaderaiWebsite/main.html')
