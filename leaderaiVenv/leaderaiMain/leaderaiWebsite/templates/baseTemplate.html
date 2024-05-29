@@ -7,18 +7,25 @@
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        body {
-            background-color: #343a40;
-            color: #ffffff;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
         .navbar {
             background-color: #212529;
         }
         .navbar-brand {
             color: #007bff !important;
+        }
+        body {
+            background-color: #343a40;
+            color: #ffffff;
+        }
+        .login-container {
+            margin-top: 10%;
+        }
+        .card {
+            background-color: #212529;
+        }
+        .card-header, .btn {
+            background-color: #007bff;
+            border: none;
         }
         .footer {
             background-color: #212529;
@@ -45,21 +52,19 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'login' %}">Account</a>
+                    <span>
+                        <a class="nav-link" href="{% url 'signUp' %}" style="display: inline;">Sign Up</a>
+                        <a class="nav-link" href="{% url 'login' %}" style="display: inline;">Login</a>
+                    </span>
+
                 </li>
             </ul>
         </div>
     </nav>
 
-    <!-- Main content -->
-    <div class="container flex-grow-1">
-        <div class="row">
-            <div class="col">
-                <h1>Welcome to LeaderAI</h1>
-                <p>Your AI-powered leadership tool.</p>
-            </div>
-        </div>
-    </div>
+    {% block content %}
+
+    {% endblock %}
 
     <!-- Footer -->
     <footer class="footer">
