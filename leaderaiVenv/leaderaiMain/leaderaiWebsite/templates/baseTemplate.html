@@ -7,15 +7,20 @@
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
+        html, body {
+            height: 100%;
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+            background-color: #343a40;
+            color: #ffffff;
+        }
         .navbar {
             background-color: #212529;
         }
         .navbar-brand {
             color: #007bff !important;
-        }
-        body {
-            background-color: #343a40;
-            color: #ffffff;
         }
         .login-container {
             margin-top: 10%;
@@ -27,12 +32,13 @@
             background-color: #007bff;
             border: none;
         }
+        .content {
+            flex: 1;
+        }
         .footer {
             background-color: #212529;
             color: #ffffff;
             padding: 10px 0;
-            position: absolute;
-            bottom: 0;
             width: 100%;
             text-align: center;
         }
@@ -45,7 +51,8 @@
 <body>
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark">
-        <a class="navbar-brand" href="#">LeaderAI</a>
+        <a class="navbar-brand" href="{% url 'main' %}">LeaderAI</a>
+        <a class="nav-link" href="https://modlinglobal.substack.com/" target="_blank" style="color: #007bff;">Newsletter</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -56,23 +63,22 @@
                         <a class="nav-link" href="{% url 'signUp' %}" style="display: inline;">Sign Up</a>
                         <a class="nav-link" href="{% url 'login' %}" style="display: inline;">Login</a>
                     </span>
-
                 </li>
             </ul>
         </div>
     </nav>
 
-    {% block content %}
-
-    {% endblock %}
+    <div class="content">
+        {% block content %}
+        {% endblock %}
+    </div>
 
     <!-- Footer -->
     <footer class="footer">
         <div>
-            <a href="#">Contact</a>
-            <a href="#">About</a>
-            <a href="#">Ethics</a>
-            <a href="#">Buy</a>
+            <a href="{% url 'contact' %}">Contact/About</a>
+            <a href="https://www.intelligence.gov/principles-of-artificial-intelligence-ethics-for-the-intelligence-community" target="_blank">Ethics</a>
+            <a href="{% url 'paywall' %}">Buy</a>
         </div>
         <div>
             <small>Disclaimer: This is a fictional company and website for demonstration purposes.</small>
@@ -82,6 +88,6 @@
     <!-- Bootstrap JS and dependencies -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://stackpath.amazonaws.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

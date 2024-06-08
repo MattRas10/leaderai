@@ -1,86 +1,50 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>LeaderAI - Main</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+{% extends 'baseTemplate.html' %}
+
+{% block content %}
     <style>
-        body {
-            background-color: #343a40;
-            color: #ffffff;
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+        .container-fluid {
             display: flex;
             flex-direction: column;
-            min-height: 100vh;
+            height: 100%;
         }
-        .navbar {
-            background-color: #212529;
+        .row {
+            flex: 1;
+            display: flex;
+            margin: 0;
         }
-        .navbar-brand {
-            color: #007bff !important;
+        .chat-sidebar {
+            background-color: #2a2d32; /* Slightly lighter shade of gray */
+            padding: 20px;
+            overflow-y: auto;
+            height: 100%;
         }
-        .footer {
-            background-color: #212529;
-            color: #ffffff;
-            padding: 10px 0;
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            text-align: center;
+        .chat-message {
+            margin-bottom: 10px;
         }
-        .footer a {
-            color: #007bff;
-            margin: 0 10px;
+        .col-md-10 {
+            padding: 20px;
         }
     </style>
-</head>
-<body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark">
-        <a class="navbar-brand" href="#">LeaderAI</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <span>
-                        <a class="nav-link" href="{% url 'signUp' %}" style="display: inline;">Sign Up</a>
-                        <a class="nav-link" href="{% url 'login' %}" style="display: inline;">Login</a>
-                    </span>
-
-                </li>
-            </ul>
-        </div>
-    </nav>
 
     <!-- Main content -->
-    <div class="container flex-grow-1">
+    <div class="container-fluid flex-grow-1" style="padding-left: 0;">
         <div class="row">
-            <div class="col">
+            <!-- Chat sidebar -->
+            <div class="col-md-2 chat-sidebar">
+                <h4>Chat History</h4>
+                <div id="chat-messages">
+                    <!-- Chat messages will go here -->
+                </div>
+            </div>
+            <div class="col-md-10">
                 <h1>Welcome to LeaderAI</h1>
                 <p>Your AI-powered leadership tool.</p>
+                <!-- Additional content can be added here -->
             </div>
         </div>
     </div>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div>
-            <a href="#">Contact</a>
-            <a href="#">About</a>
-            <a href="#">Ethics</a>
-            <a href="#">Buy</a>
-        </div>
-        <div>
-            <small>Disclaimer: This is a fictional company and website for demonstration purposes.</small>
-        </div>
-    </footer>
-
-    <!-- Bootstrap JS and dependencies -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</body>
-</html>
+{% endblock %}
