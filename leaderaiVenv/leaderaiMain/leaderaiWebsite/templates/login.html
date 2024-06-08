@@ -9,6 +9,11 @@
                 </div>
                 <div class="card-body">
                     <form method="POST" action="{% url 'login' %}">
+
+                        {% if error_message %}
+                        <div class="alert alert-danger">{{ error_message }}</div>
+                        {% endif %}
+
                         {% csrf_token %}
                         <div class="form-group">
                             <label for="email">Email address</label>
