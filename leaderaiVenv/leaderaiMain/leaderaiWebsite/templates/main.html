@@ -1,11 +1,49 @@
 {% extends 'baseTemplate.html' %}
 
 {% block content %}
-<div class="container flex-grow-1">
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+        .container-fluid {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        .row {
+            flex: 1;
+            display: flex;
+            margin: 0;
+        }
+        .chat-sidebar {
+            background-color: #2a2d32; /* Slightly lighter shade of gray */
+            padding: 20px;
+            overflow-y: auto;
+            height: 100%;
+        }
+        .chat-message {
+            margin-bottom: 10px;
+        }
+        .col-md-10 {
+            padding: 20px;
+        }
+    </style>
+
+    <!-- Main content -->
+    <div class="container-fluid flex-grow-1" style="padding-left: 0;">
         <div class="row">
-            <div class="col">
+            <!-- Chat sidebar -->
+            <div class="col-md-2 chat-sidebar">
+                <h4>Chat History</h4>
+                <div id="chat-messages">
+                    <!-- Chat messages will go here -->
+                </div>
+            </div>
+            <div class="col-md-10">
                 <h1>Welcome to LeaderAI</h1>
                 <p>Your AI-powered leadership tool.</p>
+                <!-- Additional content can be added here -->
             </div>
         </div>
     </div>
