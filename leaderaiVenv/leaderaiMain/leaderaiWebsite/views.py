@@ -32,6 +32,12 @@ def login_view(request):
 def main_view(request):
     return render(request, 'main.html')
 
+def contact_view(request):
+    return render(request, 'contact.html')
+
+def paywall_view(request):
+    return render(request, 'paywall.html')
+
 def signUp_view(request):
     if request.method == 'POST':
         # Extract form data
