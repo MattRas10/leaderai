@@ -2,7 +2,7 @@ from django.shortcuts import render
 from .models import User
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 
 def login_view(request):
     error_message = None
@@ -28,6 +28,10 @@ def login_view(request):
 
         return render(request, 'login.html', {'error_message': error_message})
     return render(request, 'login.html')
+
+def logout_view(request):
+    logout(request)
+    return render(request, 'main.html')
 
 def main_view(request):
     return render(request, 'main.html')

@@ -41,7 +41,11 @@
                 </div>
             </div>
             <div class="col-md-10">
+                {% if user.is_authenticated %}
+                <h1>Welcome to LeaderAI, {{ user.full_name }}</h1>
+                {% else %}
                 <h1>Welcome to LeaderAI</h1>
+                {% endif %}
                 <p>Your AI-powered leadership tool.</p>
                 <!-- Additional content can be added here -->
             </div>
