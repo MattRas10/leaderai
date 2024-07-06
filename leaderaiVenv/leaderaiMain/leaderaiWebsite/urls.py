@@ -13,4 +13,8 @@ path('logout/', leaderaiWebsite_views.logout_view, name='logout'),
     path('email_verification_sent/', leaderaiWebsite_views.email_verification_sent, name='email_verification_sent'),
     path('activation_success/', leaderaiWebsite_views.activation_success, name='activation_success'),
     path('activation_invalid/', leaderaiWebsite_views.activation_invalid, name='activation_invalid'),
+    path('subscribe/', leaderaiWebsite_views.InsightSubscribeView.as_view(), name='subscribe'),
+    path('subscription_success/', leaderaiWebsite_views.subscription_success, name='subscription_success'),
+    path('subscription_cancelled/', leaderaiWebsite_views.subscription_cancelled, name='subscription_cancelled'),
+    path('webhook/stripe/', leaderaiWebsite_views.stripe_webhook, name='stripe-webhook'),
 ]

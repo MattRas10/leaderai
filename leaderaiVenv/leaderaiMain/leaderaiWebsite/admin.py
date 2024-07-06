@@ -3,14 +3,14 @@ from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from .models import User
 
 class UserAdmin(BaseUserAdmin):
-    list_display = ('email', 'full_name', 'account_name', 'phone_number', 'product_key', 'is_staff', 'is_active')
+    list_display = ('email', 'full_name', 'account_name', 'phone_number', 'product_key', 'subscription_type', 'stripe_subscription_id', 'subscription_active', 'is_staff', 'is_active')
     list_filter = ('is_staff', 'is_active')
     readonly_fields = ('product_key',)
 
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
         ('Personal info', {'fields': ('full_name', 'account_name', 'phone_number')}),
-        ('Product info', {'fields': ('product_key',)}),
+        ('Product info', {'fields': ('product_key', 'subscription_type', 'stripe_subscription_id', 'subscription_active',)}),
         ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions')}),
     )
     add_fieldsets = (

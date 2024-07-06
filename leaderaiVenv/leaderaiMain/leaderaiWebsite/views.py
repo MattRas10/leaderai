@@ -11,6 +11,16 @@ from django.utils.encoding import force_bytes, force_str
 from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import EmailMessage
 from .tokens import account_activation_token
+from django.conf import settings
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
+from django.http import HttpResponse, JsonResponse
+import stripe
+import time
+from django.views import View
+from .forms import SubscriptionForm
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 
 User = get_user_model()
 
@@ -119,3 +129,101 @@ def signUp_view(request):
         return HttpResponseRedirect(reverse('login'))  # Redirect to login page after successful registration
 
     return render(request, 'signUp.html')
+
+stripe.api_key = settings.STRIPE_SECRET_KEY
+
+@method_decorator(login_required, name='dispatch')
+class InsightSubscribeView(View):
+    def get(self, request):
+        # Replace with your actual price ID for the Insight plan
+        price_id = 'price_1PYveyP4wD2jcjT2tKQitH7m'
+
+        try:
+            # Create a Stripe checkout session
+            checkout_session = stripe.checkout.Session.create(
+                customer_email=request.user.email,
+                payment_method_types=['card'],
+                line_items=[
+                    {
+                        'price': price_id,
+                        'quantity': 1,
+                    },
+                ],
+                mode='subscription',
+                success_url=request.build_absolute_uri(reverse('subscription_success')),
+                cancel_url=request.build_absolute_uri(reverse('subscription_cancelled')),
+            )
+
+            # Redirect to Stripe Checkout page
+            return redirect(checkout_session.url)
+        except stripe.error.StripeError as e:
+            return render(request, 'error.html', {'error': str(e)})
+
+def subscription_success(request):
+    def get(self, request):
+        return render(request, 'subscription_success.html')
+def subscription_cancelled(request):
+    return render(request, 'subscription_cancelled.html')
+
+
+@csrf_exempt
+def stripe_webhook(request):
+    payload = request.body
+    sig_header = request.META['HTTP_STRIPE_SIGNATURE']
+    endpoint_secret = 'your-webhook-signing-secret'  # Replace with your actual webhook signing secret
+
+    event = None
+
+    try:
+        event = stripe.Webhook.construct_event(
+            payload, sig_header, endpoint_secret
+        )
+    except ValueError as e:
+        # Invalid payload
+        return HttpResponse(status=400)
+    except stripe.error.SignatureVerificationError as e:
+        # Invalid signature
+        return HttpResponse(status=400)
+
+    # Handle the checkout.session.completed event
+    if event['type'] == 'checkout.session.completed':
+        session = event['data']['object']
+
+        # Fulfill the purchase and update the user subscription
+        handle_checkout_session(session)
+
+    return JsonResponse({'status': 'success'})
+
+
+def handle_checkout_session(session):
+    # Retrieve the user associated with the session
+    user_email = session['customer_details']['email']
+    subscription_id = session['subscription']
+    price_id = session['display_items'][0]['price']['id']  # Assuming only one item in the display items
+
+    # Determine subscription type based on price_id
+    subscription_type = determine_subscription_type(price_id)
+
+    try:
+        user = User.objects.get(email=user_email)
+        subscription, created = Subscription.objects.get_or_create(user=user)
+        subscription.stripe_subscription_id = subscription_id
+        subscription.subscription_type = subscription_type
+        subscription.active = True
+        subscription.save()
+    except User.DoesNotExist:
+        # Handle the case where the user does not exist
+        pass
+
+
+def determine_subscription_type(price_id):
+    # Map Stripe price_id to your subscription type logic
+    # Example mapping, customize based on your actual Stripe products and prices
+    if price_id == '':  # Replace with your actual Stripe price IDs
+        return 'INSIGHT'
+    elif price_id == '':
+        return 'PROFESSIONAL'
+    elif price_id == '':
+        return 'PROFESSIONAL_PLUS'
+    else:
+        return 'UNKNOWN'  # Handle unknown cases or raise an error
