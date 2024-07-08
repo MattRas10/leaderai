@@ -82,7 +82,12 @@
         <div>
             <a href="{% url 'contact' %}">Contact/About</a>
             <a href="https://www.intelligence.gov/principles-of-artificial-intelligence-ethics-for-the-intelligence-community" target="_blank">Ethics</a>
-            <a href="{% url 'paywall' %}">Buy</a>
+            {% if user.is_authenticated %}
+                <a href="{% url 'subscribe' %}">Buy</a>
+            {% else %}
+                <a href="{% url 'login' %}">Buy</a>
+            {% endif %}
+
         </div>
         <div>
             <small>Disclaimer: This is a fictional company and website for demonstration purposes.</small>

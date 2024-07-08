@@ -48,6 +48,13 @@
                 {% endif %}
                 <p>Your AI-powered leadership tool.</p>
                 <!-- Additional content can be added here -->
+                {% if user.is_authenticated %}
+                <form id="useForm" action="/use_query/" method="POST">
+                    {% csrf_token %}
+                    <button type="submit" id="useButton">Use Query</button>
+                    <p>{{user.queries}}</p>
+                </form>
+                {% endif %}
             </div>
         </div>
     </div>

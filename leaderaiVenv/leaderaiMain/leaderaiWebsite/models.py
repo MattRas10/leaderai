@@ -25,9 +25,10 @@ class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True)
     password = models.CharField(max_length=128)  # AbstractBaseUser already has this field
     product_key = models.UUIDField(default=None, null=True, unique=True, editable=False)
+    queries = models.IntegerField(default=5)
 
     stripe_subscription_id = models.CharField(max_length=255, null=True, blank=True)
-    subscription_type = models.CharField(max_length=50, choices=(
+    subscription_type = models.CharField(max_length=50, default='Free', choices=(
         ('FREE', 'Free'),
         ('INSIGHT', 'Insight'),
         ('PROFESSIONAL', 'Professional'),

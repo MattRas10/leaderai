@@ -1,47 +1,110 @@
-<!-- subscribe.html -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Subscribe</title>
-    <script src="https://js.stripe.com/v3/"></script>
-</head>
-<body>
-    <h1>Subscribe to the Insight Plan</h1>
-    <form action="{% url 'subscribe' %}" method="post" id="subscription-form">
-        {% csrf_token %}
-        {{ form }}
-        <div id="card-element"></div>
-        <div id="card-errors" role="alert"></div>
-        <button type="submit">Subscribe</button>
-    </form>
+{% extends 'baseTemplate.html' %}
 
-    <script>
-        var stripe = Stripe('{{ stripe_key }}');
-        var elements = stripe.elements();
-        var card = elements.create('card');
-        card.mount('#card-element');
+{% block content %}
+<div class="container mt-5 text-center">
+    <h2>Choose Your LeaderAI Plan</h2>
+    <p class="lead">Select the plan that best suits your needs.</p>
+    
+    <div class="row mt-5">
+        <!-- Insight Plan -->
+        <div class="col-md-3">
+            <div class="card mb-4 shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="my-0 font-weight-normal">Insight</h4>
+                </div>
+                <div class="card-body">
+                    <h1 class="card-title pricing-card-title">$35 <small class="text-muted">/ mo</small></h1>
+                    <ul class="list-unstyled mt-3 mb-4">
+                        <li>Weekly/Monthly Users</li>
+                        <br>
+                        <li>Newsletter of the AI model of Xi jinping responding to major news in China. Every weekday</li>
+                        <br>
+                        <li>Periodic Access to AI (usage quota 50 queries a month)</li>
+                        <br>
+                        <li>Responsive Customer Service</li>
+                        <!-- <br>
+                        <li>(Signup for 14 day trial)</li> -->
+                    </ul>
+                    <a href="{% url 'subscribe_insight' %}" class="btn btn-lg btn-block btn-outline-primary" style="color: white">Subscribe</a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Professional -->
+        <div class="col-md-3">
+            <div class="card mb-4 shadow-sm">
+                <div class="card-header bg-success text-white">
+                    <h4 class="my-0 font-weight-normal">Professional</h4>
+                </div>
+                <div class="card-body">
+                    <h1 class="card-title pricing-card-title">$225 <small class="text-muted">/ mo</small></h1>
+                    <ul class="list-unstyled mt-3 mb-4">
+                        <li>Normal model use with prompts for research purposes(usage quota 500 queries a month)</li>
+                        <br>
+                        <li>General Recorded Training</li>
+                        <br>
+                        <li>Responsive Customer Service</li>
+                    </ul>
+                    <a href="{% url 'subscribe_professional' %}" class="btn btn-lg btn-block btn-success">Subscribe</a>
+                </div>
+            </div>
+        </div>
 
-        var form = document.getElementById('subscription-form');
-        form.addEventListener('submit', function(event) {
-            event.preventDefault();
+        <!-- Professional Plus -->
+        <div class="col-md-3">
+            <div class="card mb-4 shadow-sm">
+                <div class="card-header bg-warning text-white">
+                    <h4 class="my-0 font-weight-normal">Professional Plus</h4>
+                </div>
+                <div class="card-body">
+                    <h1 class="card-title pricing-card-title">$400 <small class="text-muted">/ mo</small></h1>
+                    <ul class="list-unstyled mt-3 mb-4">
+                        <li>High model use with prompts for research and analytical purposes(usage quota 2000 queries a month)</li>
+                        <br>
+                        <li>Detailed Training Recorded video and live</li>
+                        <br>
+                        <li>Early Preview Access to updates and new models</li>
+                        <br>
+                        <li>Responsive Customer Service</li>
+                        <br>
+                        <li>Complimentary Newsletter</li>
+                        <!--<br>
+                        <li>(Education discount with emails with .edu address 20%</li>-->
+                    </ul>
+                    <a href="{% url 'subscribe_professional_plus' %}" class="btn btn-lg btn-block btn-warning" style="color: white">Subscribe</a>
+                </div>
+            </div>
+        </div>
 
-            stripe.createToken(card).then(function(result) {
-                if (result.error) {
-                    var errorElement = document.getElementById('card-errors');
-                    errorElement.textContent = result.error.message;
-                } else {
-                    var hiddenInput = document.createElement('input');
-                    hiddenInput.setAttribute('type', 'hidden');
-                    hiddenInput.setAttribute('name', 'stripe_token');
-                    hiddenInput.setAttribute('value', result.token.id);
-                    form.appendChild(hiddenInput);
-
-                    form.submit();
-                }
-            });
-        });
-    </script>
-</body>
-</html>
+        <!-- Enterprise -->
+        <div class="col-md-3">
+            <div class="card mb-4 shadow-sm">
+                <div class="card-header bg-danger text-white">
+                    <h4 class="my-0 font-weight-normal">Enterprise</h4>
+                </div>
+                <div class="card-body">
+                    <h1 class="card-title pricing-card-title">$750+ <small class="text-muted">/ mo</small></h1>
+                    <ul class="list-unstyled mt-3 mb-4">
+                        <li>(contact sales team)</li>
+                        <br>
+                        <li>Multiple Users</li>
+                        <br>
+                        <li>Custom Tools</li>
+                        <br>
+                        <li>Custom Inputs (Data</li>
+                        <br>
+                        <li>System Integration</li>
+                        <br>
+                        <li>Dedicated Servers</li>
+                        <br>
+                        <li>Responsive Customer Service</li>
+                        <!--<br>
+                        <li>(Education discount with emails with .edu address 20%</li>-->
+                    </ul>
+                    <a href="#" class="btn btn-lg btn-block btn-danger" style="color: white">Subscribe</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
